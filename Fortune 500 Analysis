@@ -1,5 +1,5 @@
 
-# This database has fake fortun 500 data in it. 
+# This database has fake fortune 500 data in it. 
 
 CREATE TABLE fortune_companies (
     company_id INTEGER PRIMARY KEY,
