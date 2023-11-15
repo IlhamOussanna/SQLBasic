@@ -1,0 +1,90 @@
+•	Oracle Simple Queries Exercises from Oracle Apex existing Tables called Emp and Dept.
+
+1) Give the names of those employees that are not managers nor salesman and have salary greater than or equal to 2000.
+SELECT ename FROM emp
+WHERE job != 'MANAGER'
+AND job != 'SALESMAN'
+AND sal >=2000;
+
+OR
+SELECT ename FROM emp
+WHERE job NOT IN ('MANAGER', 'SALESMAN')
+AND sal >=2000;
+
+2) Write a query to return the name and hire date of those employees that work in Dallas or Chicago.
+SELECT ename, hiredate
+FROM emp
+WHERE deptno = 20
+OR deptno = 30
+ORDER BY hiredate DESC;
+
+OR
+SELECT ename, hiredate
+FROM emp
+WHERE deptno IN (20, 30)
+ORDER BY hiredate DESC;
+
+3) Write a query that return those employees that don’t make any commission and have a salary greater than 1100 but less than 5000. Exclude those employees that have a salary equal to 1500.
+SELECT *
+FROM emp
+WHERE (comm IS NULL OR comm = 0)
+AND sal > 1100 AND sal < 5000
+AND sal <> 1500;
+
+4) Return those employees that are salesman and that make either 300 dollars in commission or greater than 1000 dollars in commission.
+SELECT *
+FROM emp
+WHERE job = 'SALESMAN'
+AND (comm = 300 OR comm > 1000);
+
+•	Single Row Functions(SRFs) Exercises:
+5) Write a query to concat a name of the employees and their jobs. The sentence should be something like this “ jones IS THE NAME and their job is: MANAGER”.
+SELECT CONCAT(CONCAT(LOWER(ename), UPPER(' is the name')), CONCAT(' and their job is: ', job)) AS “Function Call”
+FROM emp;
+
+6) Considering the data exists in the city table, write a query that will return records similar to what is shown below for those cities that have the COUNTRYCODE of 'cbd’:
+"NEW YORK CITY has the population of 8,500,000".
+"LOS ANGELES has the population of 632,000".
+Note: I'd like you to use functions in the SELECT statement to solve this problem.
+
+SELECT CONCAT(CONCAT(UPPER(name), ' has the population of '), population)
+FROM city
+WHERE LOWER(countrycode) = 'cbd';
+
+7) write a query that would show the first three letters and the last three letters of the DISTRICT capitalized and separated by a dash.
+Note: I'd like you to use functions in the SELECT statement to solve this problem.
+
+SELECT CONCAT(CONCAT(UPPER(SUBSTR(district, 1, 3)), ' - '), 
+UPPER(SUBSTR(district, LENGTH(district) - 2)))
+FROM city;
+
+•	Grouping Functions
+8) Write a query that returns those department Number that have more than three employees.
+
+SELECT deptno
+FROM emp
+GROUP BY deptno
+HAVING COUNT(*) > 3
+
+9) Select within select statements (Nested Queries/ Subqueries)
+
+SELECT * FROM dept 
+WHERE deptno < (SELECT deptno FROM dept WHERE deptno = 30) 
+AND dname = 'ACCOUNTING';
+
+10) Using two tables in subquery
+
+SELECT * FROM emp 
+WHERE deptno = (SELECT deptno FROM dept WHERE loc = 'CHICAGO')
+
+
+11) Using Case statement 
+Write a query that show, If the employees make more than 3000 then they are big shot. And if they make less than 3000 then they need more money.
+
+SELECT ename, sal, CASE
+WHEN sal >= 3000 THEN 'big shot'
+WHEN sal < 3000 THEN 'need more money'
+END AS Salary_comment
+FROM emp;
+
+
