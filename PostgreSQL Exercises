@@ -1,0 +1,51 @@
+# PostgreSQL Exercises
+# I showcase proficiency in querying and analysing datasets using pgAdmin4. 
+# The exercises cover various scenarios, the queries performed on the "employees" table. 
+# Including filtering based on gender, salary ranges, department, hire dates, and aggregating data for meaningful insights.
+
+1)	Return the first name and email of female that work in the tools department having a salary greater than 110,000.
+•	SELECT first_name, email
+  FROM employees
+  WHERE gender = 'F'
+  AND department = 'Tools'
+  AND salary > 110000;
+
+2)	Return the first name and hire date of thise employees who earn 165,000 as well as those employees that work in the sports department and also happen to be men.
+•	SELECT first_name, hire_date  
+  FROM employees
+  WHERE salary > 165000
+  OR (department = 'Sports' AND gender = 'M');
+
+3)	Return the first names and hire dates of those employees who were hired during Jan 1st 2002 and Jan 1st 2004.
+•	SELECT first_name, hire_date  
+FROM employees
+WHERE hire_date BETWEEN '2002-01-01' AND '2004-01-01';
+
+4)	Return the male employees who work in the automotive department and earn more than 40,000 and less than 100,000 as well as females that work in the toys department.
+•	SELECT *
+  FROM employees
+  WHERE gender = 'M'
+  AND department = 'Automotive'
+  AND salary > 40000
+  AND salary < 100000
+  OR (gender = 'F' AND department = 'Toys');
+
+5)	Write the query that give us the total count of the employees that work in department for each one.
+•	SELECT department, COUNT(*)
+  FROM employees
+  GROUP BY department;
+
+6)	Write the query that give us the total count of male and female employees across all departments?
+•	SELECT department, gender, COUNT(*)
+  FROM employees
+  GROUP BY department, gender
+  ORDER BY department;
+
+7)	How many people having the same first name and count?
+•	SELECT first_name, COUNT(*)
+  FROM employees
+  GROUP BY first_name
+  HAVING COUNT(*) > 1;
+
+
+
